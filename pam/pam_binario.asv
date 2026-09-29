@@ -1,0 +1,26 @@
+clear; clc; close all;
+
+N = 1e5;          % numero di bit
+A = 1;            % ampiezza del segnale
+sigma = 0.5;      % dev. std. del rumore
+
+% Stringa in input
+x=rand(1,N)<.5;
+
+% Mappatura PAM antipodale: 0 -> -A, 1 -> +A
+s = A*(2*x - 1);
+
+% Canale AWGN
+r = s + sigma*randn(1,N);
+
+% Decisore a soglia (soglia = 0)
+y = r > 0;
+
+% Stringa di errore
+err=(x~=y);
+
+% Stima della probabilità di errore
+hatpe=sum(err)/N;
+
+fprintf('Probabilità di errore teorica = %f\n', pe);
+fprintf('Stima della prob. di errore = %f\n', hatpe);
